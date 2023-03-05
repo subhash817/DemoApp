@@ -1,17 +1,22 @@
 package com.example.demoapp.activity
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.dem.StudentRoomAdapter
 import com.example.demoapp.R
+import com.example.demoapp.roomdb.AppDataBase
+import com.example.demoapp.roomdb.Student
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class StudentRegistration : AppCompatActivity() {
     lateinit var studentList: Button
@@ -21,6 +26,7 @@ class StudentRegistration : AppCompatActivity() {
     lateinit var edtRollNumber: TextInputEditText
     lateinit var txtLatLong: TextView
     lateinit var imgProfile: ImageView
+    lateinit var appDb: AppDataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,7 @@ class StudentRegistration : AppCompatActivity() {
         edtRollNumber = findViewById(R.id.edtRollNumber)
         txtLatLong = findViewById(R.id.txtLatLong)
         btnSubmit = findViewById(R.id.btnSubmit)
+        appDb = AppDataBase.getDataBase(this)
         initView()
 
     }
@@ -50,12 +57,29 @@ class StudentRegistration : AppCompatActivity() {
                 edtRollNumber.setError("Please Enter Roll Number")
 
             }
-
+            val student = Student(
+                null, name, className, rollNumber
+            )
+            GlobalScope.launch(Dispatchers.IO) {
+                appDb.studentDao().addTx(student)
+            }
+            edtName.text?.clear()
+            edtClass.text?.clear()
+            edtRollNumber.text?.clear()
+            Toast.makeText(this@StudentRegistration, "Successfully Add", Toast.LENGTH_LONG).show()
+//            val arrStudent = appDb.studentDao().allStudent as ArrayList<Student?>?
+//            for (i in arrStudent!!.indices) {
+//                val linearLayoutManager = LinearLayoutManager(applicationContext)
+//                rcv.setLayoutManager(linearLayoutManager)
+//                val studentRoomAdapter=StudentRoomAdapter(this@StudentRegistration,arrStudent)
+//                rcv.adapter=studentRoomAdapter
+//            }
 
         }
         studentList.setOnClickListener {
             val intent = Intent(this, StudentList::class.java)
             startActivity(intent)
+
         }
     }
 

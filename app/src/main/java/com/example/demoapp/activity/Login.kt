@@ -49,11 +49,17 @@ class Login : AppCompatActivity() {
                             response: Response<UserLogin>
                         ) {
                             if (response.code() == 200 && response.body() != null) {
+                                val result = response.body()
+                                if (result != null) {
+                                    result.user_data.username
+                                }
                                 Log.d("Login", response.body()!!.ResponseMessage.toString())
                                 Toast.makeText(
                                     applicationContext,
                                     response.body()!!.ResponseMessage.toString(), Toast.LENGTH_LONG
                                 ).show()
+                                val intent=Intent(this@Login,DashBoard::class.java)
+                                startActivity(intent)
 
 
 
