@@ -2,10 +2,17 @@ package com.example.demoapp.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.demoapp.R
+import com.example.demoapp.model.login.UserLogin
+import com.example.demoapp.network.RetrofitClient
 import com.google.android.material.textfield.TextInputEditText
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Login : AppCompatActivity() {
     lateinit var login: Button
@@ -28,13 +35,41 @@ class Login : AppCompatActivity() {
             val password: String = edtPassword.text.toString()
             if (user.isEmpty()) {
                 edtUserId.setError("Please Enter User Id")
-            } else if (password.isEmpty()) {
+                edtUserId.requestFocus()
+                return@setOnClickListener
+            }
+            if (password.isEmpty()) {
                 edtPassword.setError("Please Enter Password")
 
             } else {
-                val intent = Intent(this, DashBoard::class.java)
-                startActivity(intent)
+                RetrofitClient.instance.userLogin("test_login", user, password)
+                    .enqueue(object : Callback<UserLogin> {
+                        override fun onResponse(
+                            call: Call<UserLogin>,
+                            response: Response<UserLogin>
+                        ) {
+                            if (response.code() == 200 && response.body() != null) {
+                                Log.d("Login", response.body()!!.ResponseMessage.toString())
+                                Toast.makeText(
+                                    applicationContext,
+                                    response.body()!!.ResponseMessage.toString(), Toast.LENGTH_LONG
+                                ).show()
+
+
+
+                            }
+
+                        }
+
+                        override fun onFailure(call: Call<UserLogin>, t: Throwable) {
+                            Toast.makeText(applicationContext, t.message, Toast.LENGTH_LONG).show()
+
+                        }
+
+                    })
+
             }
+
 
         }
 
