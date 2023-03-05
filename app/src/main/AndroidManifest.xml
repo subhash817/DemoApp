@@ -16,19 +16,19 @@
         android:usesCleartextTraffic="true"
         >
         <activity
-            android:name=".activity.StudentDetail"
+            android:name=".activity.StudentDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.StudentList"
+            android:name=".activity.StudentListActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.StudentRegistration"
+            android:name=".activity.StudentRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DashBoard"
+            android:name=".activity.DashBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.Login"
+            android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
