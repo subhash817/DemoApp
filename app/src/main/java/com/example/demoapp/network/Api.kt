@@ -26,4 +26,6 @@ interface Api {
         @Field("latlong") latlong: String,
         @Field("image") image: String,
     ):Call<StudentRegistration>
+
+     fun syncData(s: String, user: String, password: String): Any
 }

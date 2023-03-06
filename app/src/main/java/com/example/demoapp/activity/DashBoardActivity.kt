@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.demoapp.R
 
-class DashBoard : AppCompatActivity() {
+class DashBoardActivity : AppCompatActivity() {
     lateinit var studentRegistration: CardView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,7 @@ class DashBoard : AppCompatActivity() {
 
     fun initView() {
         studentRegistration.setOnClickListener {
-            val intent = Intent(this, StudentRegistration::class.java)
+            val intent = Intent(this, StudentRegistrationActivity::class.java)
             startActivity(intent)
         }
 

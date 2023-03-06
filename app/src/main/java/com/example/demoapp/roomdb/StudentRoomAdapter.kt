@@ -22,13 +22,13 @@ public class StudentRoomAdapter(var context: Context, var studentList: ArrayList
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val student= studentList?.get(position)
         if (student != null) {
-            holder.txtName?.text ?: student.studentName
+            holder.txtName?.text = student.studentName
         }
         if (student != null) {
-            holder.txtClass?.text ?: student.studentClass
+            holder.txtClass?.text = student.studentClass
         }
         if (student != null) {
-            holder.txtRollNumber?.text ?: student.studentRollNumber
+            holder.txtRollNumber?.text = student.studentRollNumber
         }
 
     }

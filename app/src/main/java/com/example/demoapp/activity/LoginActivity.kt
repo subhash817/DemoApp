@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     lateinit var login: Button
     lateinit var edtUserId: TextInputEditText
     lateinit var edtPassword: TextInputEditText
@@ -58,7 +58,7 @@ class Login : AppCompatActivity() {
                                     applicationContext,
                                     response.body()!!.ResponseMessage.toString(), Toast.LENGTH_LONG
                                 ).show()
-                                val intent=Intent(this@Login,DashBoard::class.java)
+                                val intent=Intent(this@LoginActivity,DashBoardActivity::class.java)
                                 startActivity(intent)
 
 
