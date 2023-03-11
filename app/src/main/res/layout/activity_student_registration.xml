@@ -85,7 +85,8 @@
                     android:id="@+id/edtRollNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/roll_no" />
+                    android:hint="@string/roll_no"
+                    android:inputType="number"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -102,6 +103,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/lat_long" />
+
+            <TextView
+                android:id="@+id/txtLatLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black"
+                 />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Image" />
 
             <TextView
                 android:id="@+id/txtLatLong"

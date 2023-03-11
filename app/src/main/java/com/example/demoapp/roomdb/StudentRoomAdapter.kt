@@ -2,12 +2,14 @@ package com.example.dem
 
 import com.example.demoapp.roomdb.Student
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.R
+import com.example.demoapp.activity.StudentDetailActivity
 
 public class StudentRoomAdapter(var context: Context, var studentList: ArrayList<Student?>?) :
     RecyclerView.Adapter<StudentRoomAdapter.myViewHolder>() {
@@ -29,6 +31,16 @@ public class StudentRoomAdapter(var context: Context, var studentList: ArrayList
         }
         if (student != null) {
             holder.txtRollNumber?.text = student.studentRollNumber
+        }
+        holder.itemView.setOnClickListener {
+            val intent=Intent(holder.itemView.context,StudentDetailActivity::class.java)
+            if (student != null) {
+                intent.putExtra("studentName",student.studentName)
+                intent.putExtra("studentClass",student.studentClass)
+                intent.putExtra("studentRollNumber",student.studentRollNumber)
+            }
+            holder.itemView.context.startActivity(intent)
+
         }
 
     }

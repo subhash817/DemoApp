@@ -10,4 +10,5 @@ data class Student(
     @ColumnInfo(name = "studentName") val studentName:String?,
     @ColumnInfo(name = "studentClass") val studentClass:String?,
     @ColumnInfo(name = "studentRollNumber") val studentRollNumber:String?,
+
 )

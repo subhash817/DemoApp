@@ -1,6 +1,7 @@
 package com.example.demoapp.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -35,6 +36,16 @@ class StudentRegistrationActivity : AppCompatActivity() {
     lateinit var appDb: AppDataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var cameraIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    imageUri = ImagePicker.getImageFromResult(this, result.resultCode, data)
+                    startCropImageActivity(imageUri)
+
+
+                }
+            }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_registration)
         studentList = findViewById(R.id.btnStudentList)
@@ -75,12 +86,17 @@ class StudentRegistrationActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+    fun openCameraToCapture() {
+        val cameraIntent = ImagePicker.getCameraIntent(this)
+        cameraIntentLauncher.launch(cameraIntent)
 
+    }
     fun initView() {
         btnSubmit.setOnClickListener {
             val name: String = edtName.text.toString()
             val className: String = edtClass.text.toString()
             val rollNumber: String = edtRollNumber.text.toString()
+            val latlong: String = txtLatLong.text.toString()
             if (name.isEmpty()) {
                 edtName.setError("Please Enter Name")
 
@@ -91,20 +107,26 @@ class StudentRegistrationActivity : AppCompatActivity() {
                 edtRollNumber.setError("Please Enter Roll Number")
 
             }
-            val student = Student(
-                null, name, className, rollNumber
-            )
-            GlobalScope.launch(Dispatchers.IO) {
-                appDb.studentDao().addTx(student)
+            else if (latlong.isEmpty()){
+
             }
-            edtName.text?.clear()
-            edtClass.text?.clear()
-            edtRollNumber.text?.clear()
-            Toast.makeText(this@StudentRegistrationActivity, "Successfully Add", Toast.LENGTH_LONG)
-                .show()
+            else{
+                val student = Student(
+                    null, name, className, rollNumber
+                )
+                GlobalScope.launch(Dispatchers.IO) {
+                    appDb.studentDao().addTx(student)
+                }
+                edtName.text?.clear()
+                edtClass.text?.clear()
+                edtRollNumber.text?.clear()
+
+                Toast.makeText(this@StudentRegistrationActivity, "Successfully Add", Toast.LENGTH_LONG)
+                    .show()
+            }
 
 
-            Log.d("SS", "aa")
+
 
         }
         studentList.setOnClickListener {
